@@ -1,17 +1,31 @@
 package lt.vianet.extractor.page_adapters;
 
+import java.util.List;
+
 public class WebPage implements IWebPage {
+    private String link;
     private String web;
     private String encoding;
     private String html;
+    private List<String> flightNumbers;
 
-    public WebPage(String web) {
+    public WebPage(String link) {
+        this.link = link;
+    }
+
+    @Override
+    public void setPageName(String web) {
         this.web = web;
     }
 
     @Override
     public String getPageName() {
         return web;
+    }
+
+    @Override
+    public String getPageLink() {
+        return link;
     }
 
     @Override
@@ -33,4 +47,14 @@ public class WebPage implements IWebPage {
     public void setEncoding(String encoding) {
         this.encoding = encoding;
     }
+
+
+    public void setFlightNumbers(List flightNumbers) {
+        this.flightNumbers = flightNumbers;
+    }
+
+    public List getFlightNumbers() {
+        return flightNumbers;
+    }
+
 }

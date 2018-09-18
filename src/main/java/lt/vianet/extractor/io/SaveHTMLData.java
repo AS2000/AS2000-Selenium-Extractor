@@ -1,6 +1,7 @@
 package lt.vianet.extractor.io;
 
 import lt.vianet.extractor.cleaning_process.CleanWebDomain;
+import lt.vianet.extractor.flight_class.Flight;
 import lt.vianet.extractor.page_adapters.WebPage;
 
 import java.io.File;
@@ -11,20 +12,33 @@ import java.util.Date;
 
 public class SaveHTMLData {
     private WebPage webPage;
+    private Flight flight;
 
-    public SaveHTMLData(){
+    public SaveHTMLData() {
     }
 
-    public SaveHTMLData(WebPage webPage){
+    public SaveHTMLData(WebPage webPage) {
         this.webPage = webPage;
     }
 
+    public SaveHTMLData(Flight flight) {
+        this.flight = flight;
+    }
 
-    final private static String DATA_FOLDER_NAME = "data";
+    public SaveHTMLData(WebPage webPage, Flight flight) {
+        this.webPage = webPage;
+        this.flight = flight;
+    }
+
+    final private static String DATA_FOLDER_NAME = "extraction_data";
     private static String NAME_OF_SAVE_FILE;
 
     public void saveHTML() {
         saveHTMLtoFile();
+    }
+
+    public void saveData() {
+        saveDatatoFile();
     }
 
 
@@ -35,9 +49,9 @@ public class SaveHTMLData {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmm");
         String day_date = sdf.format(new Date());
 
-        String pageName = new CleanWebDomain().getCleanWebDomain(webPage.getPageName());
+        String pageName = new CleanWebDomain().getCleanWebDomain(webPage.getPageLink());
 
-        NAME_OF_SAVE_FILE = "data_" + day_date + "_" + pageName + ".txt";
+        NAME_OF_SAVE_FILE = "data_" + day_date + "_html_" + pageName + ".txt";
 
         try {
             FileWriter writer = new FileWriter(DATA_FOLDER_NAME + File.separator + NAME_OF_SAVE_FILE, false);
@@ -45,7 +59,54 @@ public class SaveHTMLData {
             if (webPage.getHTML() != null) {
                 writer.write(webPage.getHTML());
             }
-            //	Uzdarome irasyma i faila
+            //	Close writing to File
+            writer.close();
+        } catch (IOException e) {
+            //TODO change Exception sout to log
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    private void saveDatatoFile() {
+
+        createDirectory();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmm");
+        String day_date = sdf.format(new Date());
+
+        String pageName = new CleanWebDomain().getCleanWebDomain(webPage.getPageLink());
+
+        NAME_OF_SAVE_FILE = "data_" + day_date + "_flight_" + pageName + ".txt";
+
+        writeDatatoFile(flight);
+    }
+
+
+    private void writeDatatoFile(Flight flight) {
+        try {
+            FileWriter writer = new FileWriter(DATA_FOLDER_NAME + File.separator + NAME_OF_SAVE_FILE, true);
+
+            if (flight.getDepartureMonth() != null && flight.getDepartureDay() != null) {
+                writer.write("Depature Date: " + flight.getDepartureMonth() + flight.getDepartureDay());
+            }
+
+            if (flight.getDepartureAirport() != null && flight.getArrivalAirport() != null) {
+                writer.write(" -- Depature Airport: " + flight.getDepartureAirport() + " -- Arrival Airport: " + flight.getArrivalAirport());
+            }
+
+            if (flight.getDepartureTime() != null) {
+                writer.write(" -- Depature Time: " + flight.getDepartureTime());
+            }
+            if (flight.getArrivalTime() != null) {
+                writer.write(" -- Arrival Time: " + flight.getArrivalTime());
+            }
+            if (flight.getCheapestPrice() > 0) {
+                writer.write("  -- Flight Price (USD): " + flight.getCheapestPrice());
+            }
+            writer.write(System.lineSeparator());
+
+            //	Close writing to File
             writer.close();
         } catch (IOException e) {
             //TODO change Exception sout to log

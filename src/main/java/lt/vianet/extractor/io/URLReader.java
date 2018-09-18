@@ -15,20 +15,20 @@ public class URLReader {
     }
 
     public URLReader(WebPage webPage) {
+
         this.webPage = webPage;
     }
 
-    public WebPage readThePage() {
+    public void readThePage() {
 
-        return getPlainText();
+        getPlainText();
     }
 
-    private WebPage getPlainText() {
+    private void getPlainText() {
         StringBuffer buffer = new StringBuffer();
-        try {
-            String url = webPage.getPageName();
 
-            URL web = new URL(url);
+        try {
+            URL web = new URL(webPage.getPageLink());
             BufferedReader reader = new BufferedReader(new InputStreamReader(web.openStream(), webPage.getEncoding()));
 
             String inputLine;
@@ -45,6 +45,5 @@ public class URLReader {
         } catch (IOException ioe) {
             System.out.println("You catched: IOException");
         }
-        return webPage;
     }
 }
