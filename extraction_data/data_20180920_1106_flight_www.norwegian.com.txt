@@ -1,3 +1,0 @@
-Depature Date: 20181001 -- Depature Airport: OSL -- Arrival Airport: RIX -- Depature Time: 11:20 -- Arrival Time: 13:50  -- Flight Price (USD): 82.9
-Depature Date: 20181002 -- Depature Airport: OSL -- Arrival Airport: RIX -- Depature Time: 11:20 -- Arrival Time: 13:50  -- Flight Price (USD): 73.9
-Depature Date: 20181003 -- Depature Airport: OSL -- Arrival Airport: RIX -- Depature Time: 11:20 -- Arrival Time: 13:50

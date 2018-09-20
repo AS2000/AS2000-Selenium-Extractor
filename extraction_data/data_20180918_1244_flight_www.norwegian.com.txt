@@ -1,1 +1,0 @@
-One way Flight:  Depature Airport: OSL -- Arrival Airport: RIX -- Depature Date: 20181001 -- Depature Time: 11:20 -- Arrival Time: 13:50  -- Flight Price (USD): 80.9
