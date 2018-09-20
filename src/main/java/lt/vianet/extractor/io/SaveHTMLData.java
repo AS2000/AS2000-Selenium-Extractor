@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class SaveHTMLData {
+    final private static String DATA_FOLDER_NAME = "extraction_data";
+    private static String NAME_OF_SAVE_FILE;
     private WebPage webPage;
     private Flight flight;
 
@@ -24,14 +26,10 @@ public class SaveHTMLData {
     public SaveHTMLData(Flight flight) {
         this.flight = flight;
     }
-
     public SaveHTMLData(WebPage webPage, Flight flight) {
         this.webPage = webPage;
         this.flight = flight;
     }
-
-    final private static String DATA_FOLDER_NAME = "extraction_data";
-    private static String NAME_OF_SAVE_FILE;
 
     public void saveHTML() {
         saveHTMLtoFile();

@@ -14,13 +14,13 @@ public class WebPage implements IWebPage {
     }
 
     @Override
-    public void setPageName(String web) {
-        this.web = web;
+    public String getPageName() {
+        return web;
     }
 
     @Override
-    public String getPageName() {
-        return web;
+    public void setPageName(String web) {
+        this.web = web;
     }
 
     @Override
@@ -48,13 +48,12 @@ public class WebPage implements IWebPage {
         this.encoding = encoding;
     }
 
+    public List getFlightNumbers() {
+        return flightNumbers;
+    }
 
     public void setFlightNumbers(List flightNumbers) {
         this.flightNumbers = flightNumbers;
-    }
-
-    public List getFlightNumbers() {
-        return flightNumbers;
     }
 
 }

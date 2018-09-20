@@ -3,7 +3,10 @@ package lt.vianet.extractor.extraction;
 import lt.vianet.extractor.flight_class.Flight;
 import lt.vianet.extractor.page_adapters.WebPage;
 
+import static lt.vianet.extractor.Actions.Actions.CURRANCY;
+
 public class DataExtraction {
+    private static int START_BLOCK_MARKER;
     private WebPage webPage;
 
     public DataExtraction() {
@@ -20,52 +23,76 @@ public class DataExtraction {
 
 
     private Flight extractDataFromHTML(Flight flight) {
-        String markerTag;
 
-        markerTag = "\"depdest\"";
-        flight.setDepartureTime(extractTime(flight.getFlightNumber(), markerTag));
 
-        markerTag = "\"arrdest\"";
-        flight.setArrivalTime(extractTime(flight.getFlightNumber(), markerTag));
+        extractTime(flight);
 
-        flight.setCheapestPrice(extractPrice(flight.getFlightNumber(), markerTag));
+
+        extractPrice(flight);
+
 
         return flight;
     }
 
 
-    private String extractTime(String boundTag, String markerTag) {
+    private void extractTime(Flight flight) {
 
         StringBuffer buffer = new StringBuffer();
-
         buffer.append(webPage.getHTML());
+
+        String markerTag;
+        START_BLOCK_MARKER = 0;
+        String timeTagMarker = "";
+
+        markerTag = "\"depdest\"";
+        timeTagMarker = "<td class=" + markerTag + " title=\"" + flight.getFlightNumber() + "\">";
+
+        // Start of search in the String
+        flight.setDepartureTime(getTime(buffer, timeTagMarker));
+
+        markerTag = "\"arrdest\"";
+        timeTagMarker = "<td class=" + markerTag + ">";
+
+        // Start of search in the String
+        flight.setArrivalTime(getTime(buffer, timeTagMarker));
+    }
+
+
+    private String getTime(StringBuffer buffer, String timeTagMarker) {
 
         try {
 
-            // Start of search in the String
-            int startBlock = buffer.indexOf(boundTag, 0);
+            int startMark = buffer.indexOf(timeTagMarker, START_BLOCK_MARKER);
 
-            int startMark = buffer.indexOf(markerTag, startBlock);
             if (startMark > 0 && startMark < buffer.length()) {
                 int startDiv = buffer.indexOf("<div class=\"content emphasize\">", startMark);
-                int endDiv = buffer.indexOf("</div", startMark);
+                int endDiv = buffer.indexOf("</div", startDiv);
 
                 if ((startDiv > 0) && (startDiv < (buffer.length() - 31)) && (endDiv < buffer.length())) {
-                    String time = buffer.substring(startDiv + 31, endDiv);
 
-                    return time;
+                    START_BLOCK_MARKER = startMark;
+                    return buffer.substring(startDiv + 31, endDiv);
                 }
             }
 
         } catch (StringIndexOutOfBoundsException siobe) {
             System.out.println("You catched: " + siobe.getMessage());
         }
-
         return "";
     }
 
 
-    private double extractPrice(String boundTag, String markerTag) {
+    private void extractPrice(Flight flight) {
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append(webPage.getHTML());
+
+        flight.setCheapestPrice(getPrice());
+    }
+
+
+    private double getPrice() {
 
         StringBuffer buffer = new StringBuffer();
 
@@ -74,28 +101,24 @@ public class DataExtraction {
         try {
 
             // Start of search in the String
-            int startBlock = buffer.indexOf(boundTag, 0);
 
-            int startMark = buffer.indexOf(markerTag, startBlock);
+            int startMark = START_BLOCK_MARKER;
             if (startMark > 0 && startMark < buffer.length()) {
-                int startDiv = buffer.indexOf("<label class=\"label seatsokfare\" title=\"USD\">", startMark);
+                int startDiv = buffer.indexOf("title=\"" + CURRANCY + "\">", startMark);
                 int endDiv = buffer.indexOf("</label", startMark);
 
-                if ((startDiv > 0) && (startDiv < (buffer.length() - 45)) && (endDiv < buffer.length())) {
-                    double price = Double.parseDouble(buffer.substring(startDiv + 45, endDiv));
+                if ((startDiv > 0) && (startDiv < (buffer.length() - 12)) && (endDiv < buffer.length())) {
+                    double price = Double.parseDouble(buffer.substring(startDiv + 12, endDiv));
 
+                    START_BLOCK_MARKER = endDiv;
                     return price;
                 }
             }
-
         } catch (StringIndexOutOfBoundsException siobe) {
             System.out.println("You catched: " + siobe.getMessage());
         }
-
         return 0;
     }
-
-
 }
 
 

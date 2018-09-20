@@ -8,17 +8,17 @@ public class TrimSpaces {
     public TrimSpaces() {
     }
 
-    public TrimSpaces(WebPage webPage){
+    public TrimSpaces(WebPage webPage) {
         this.webPage = webPage;
     }
 
 
-    public WebPage getTrimedHTML(){
+    public WebPage getTrimedHTML() {
 
         return timmHTML();
     }
 
-    private WebPage timmHTML(){
+    private WebPage timmHTML() {
 
         // trimm Spaces
         String withSpaces = webPage.getHTML();

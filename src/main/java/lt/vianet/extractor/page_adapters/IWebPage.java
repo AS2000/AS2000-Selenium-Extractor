@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface IWebPage {
 
-    public void setPageName(String web);
-
     public String getPageName();
+
+    public void setPageName(String web);
 
     public String getPageLink();
 
@@ -18,10 +18,9 @@ public interface IWebPage {
 
     public void setEncoding(String encoding);
 
-    public void setFlightNumbers(List flightNumbers);
-
     public List getFlightNumbers();
 
+    public void setFlightNumbers(List flightNumbers);
 
 
 }

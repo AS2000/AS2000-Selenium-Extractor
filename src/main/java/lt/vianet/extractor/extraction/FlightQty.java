@@ -42,17 +42,17 @@ public class FlightQty {
 
                 flightNumber = buffer.substring(startMark + 27, endMark);
 
-                if ( flightNumbers.size() == 0) {
+                if (flightNumbers.size() == 0) {
                     flightNumbers.add(flightNumber);
                 }
 
-                if ( flightNumbers.size() > 0 && (!flightNumbers.get(flightNumbers.size() - 1).equals(flightNumber))) {
+                if (flightNumbers.size() > 0 && (!flightNumbers.get(flightNumbers.size() - 1).equals(flightNumber))) {
                     flightNumbers.add(flightNumber);
                 }
 
 
             }
-            startMark = buffer.indexOf(markerTag, startMark + 27 );
+            startMark = buffer.indexOf(markerTag, startMark + 27);
             endMark = buffer.indexOf(markerEndTag, startMark);
         }
         webPage.setFlightNumbers(flightNumbers);

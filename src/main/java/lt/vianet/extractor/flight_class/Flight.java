@@ -50,6 +50,10 @@ public class Flight implements IFlight {
         return flightNumber;
     }
 
+    @Override
+    public String getArrivalDate() {
+        return arrivalDate;
+    }
 
     @Override
     public void setArrivalDate(String arrivalDate) {
@@ -57,10 +61,9 @@ public class Flight implements IFlight {
     }
 
     @Override
-    public String getArrivalDate() {
-        return arrivalDate;
+    public String getConnectionAirport() {
+        return connectionAirport;
     }
-
 
     @Override
     public void setConnectionAirport(String connectionAirport) {
@@ -68,10 +71,9 @@ public class Flight implements IFlight {
     }
 
     @Override
-    public String getConnectionAirport() {
-        return connectionAirport;
+    public String getDepartureTime() {
+        return departureTime;
     }
-
 
     @Override
     public void setDepartureTime(String departureTime) {
@@ -79,25 +81,13 @@ public class Flight implements IFlight {
     }
 
     @Override
-    public String getDepartureTime() {
-        return departureTime;
-    }
-
-
-    @Override
-    public void setArrivalTime(String arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
-
-    @Override
     public String getArrivalTime() {
         return arrivalTime;
     }
 
-
     @Override
-    public void setBoundTag(String boundTag) {
-        this.boundTag = boundTag;
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 
     @Override
@@ -106,13 +96,18 @@ public class Flight implements IFlight {
     }
 
     @Override
-    public void setCheapestPrice(double cheapestPrice) {
-        this.cheapestPrice = cheapestPrice;
+    public void setBoundTag(String boundTag) {
+        this.boundTag = boundTag;
     }
 
     @Override
     public double getCheapestPrice() {
         return cheapestPrice;
+    }
+
+    @Override
+    public void setCheapestPrice(double cheapestPrice) {
+        this.cheapestPrice = cheapestPrice;
     }
 
 }
