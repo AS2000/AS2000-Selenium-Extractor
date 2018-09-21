@@ -36,7 +36,7 @@ public class FlysasCom {
 // ARN (Stockholm) to LHR (London) departing 2018-10-08 and returning 2018-10-14.
 // Only data for flights that are direct or have a connection at Oslo should be accepted.
 
-            getHTMLusingSelenide();
+            getHTMLusingSelenium();
 
 //http://toolsqa.com/selenium-webdriver/browser-commands/
 
@@ -66,27 +66,48 @@ public class FlysasCom {
         }
     }
 
-    private void getHTMLusingSelenide() {
+    private void getHTMLusingSelenium() {
 
         System.setProperty("webdriver.gecko.driver", "C:\\Program Files\\geckodriver\\geckodriver.exe");
 
+        String flightFrom = "ARN";
+        String flightTo = "LHR";
+
         WebDriver driver = new FirefoxDriver();
         driver.get("https://classic.flysas.com/en/uk/");
-        String fieldFrom = "ctl00$FullRegion$MainRegion$ContentRegion$ContentFullRegion$ContentLeftRegion$CEPGroup1$CEPActive$cepNDPRevBookingArea$predictiveSearch$txtFrom";
-        String fieldTo = "ctl00$FullRegion$MainRegion$ContentRegion$ContentFullRegion$ContentLeftRegion$CEPGroup1$CEPActive$cepNDPRevBookingArea$predictiveSearch$txtTo";
 
-        WebElement queryFrom = driver.findElement(By.name(fieldFrom));
-        queryFrom.sendKeys("ARN");
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.findElement(By.id("ARN")).click();
-
-        WebElement queryTo = driver.findElement(By.name(fieldTo));
-        queryTo.sendKeys("LHR");
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.findElement(By.id("LHR")).click();
+        setOneWayFlight(driver);
+        setDestinationFromTo( driver, flightFrom, flightTo);
 
 
 // driver.getPageSource(); : String – This method returns the Source Code of the page. Accepts nothing as a parameter and returns a String value.
 // driver.close();
+    }
+
+
+    private void setOneWayFlight(WebDriver driver){
+
+        String buttonOneWayID = "uniform-ctl00_FullRegion_MainRegion_ContentRegion_ContentFullRegion_ContentLeftRegion_CEPGroup1_CEPActive_cepNDPRevBookingArea_ceptravelTypeSelector_oneway";
+
+        WebElement queryFrom = driver.findElement(By.id(buttonOneWayID));
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        queryFrom.click();
+    }
+
+
+    private void setDestinationFromTo(WebDriver driver, String flightFrom, String flightTo){
+        String fieldFrom = "ctl00$FullRegion$MainRegion$ContentRegion$ContentFullRegion$ContentLeftRegion$CEPGroup1$CEPActive$cepNDPRevBookingArea$predictiveSearch$txtFrom";
+        String fieldTo = "ctl00$FullRegion$MainRegion$ContentRegion$ContentFullRegion$ContentLeftRegion$CEPGroup1$CEPActive$cepNDPRevBookingArea$predictiveSearch$txtTo";
+
+        WebElement queryFrom = driver.findElement(By.name(fieldFrom));
+        queryFrom.sendKeys(flightFrom);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.findElement(By.id(flightFrom)).click();
+
+        WebElement queryTo = driver.findElement(By.name(fieldTo));
+        queryTo.sendKeys(flightTo);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.findElement(By.id(flightTo)).click();
+
     }
 }
