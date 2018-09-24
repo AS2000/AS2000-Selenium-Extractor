@@ -8,6 +8,7 @@ public class FlightFlysasCom extends Flight implements IFlightFlysasCom {
     private Date departureDate;
     private Date arrivalDate;
     private String flightNumber;
+    private double cheapestPrice;
     private double tax;
     private double priceWitoutTax;
     private double fee;
@@ -15,11 +16,15 @@ public class FlightFlysasCom extends Flight implements IFlightFlysasCom {
     public FlightFlysasCom() {
     }
 
-    public FlightFlysasCom(String departureAirport, String arrivalAirport, Date departureDate, Date arrivalDate) {
+    public FlightFlysasCom(String departureAirport, String arrivalAirport, Date departureDate, Date arrivalDate, double cheapestPrice, double tax, double priceWitoutTax, double fee) {
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
+        this.cheapestPrice = cheapestPrice;
+        this.tax = tax;
+        this.priceWitoutTax = priceWitoutTax;
+        this.fee = fee;
     }
 
     public FlightFlysasCom(String departureAirport, String arrivalAirport, Date departureDate, String flightNumber) {
@@ -29,6 +34,21 @@ public class FlightFlysasCom extends Flight implements IFlightFlysasCom {
         this.flightNumber = flightNumber;
     }
 
+    public String getDepartureAirport() {
+        return departureAirport;
+    }
+
+    public void setDepartureAirport(String departureAirport) {
+        this.departureAirport = departureAirport;
+    }
+
+    public String getArrivalAirport() {
+        return arrivalAirport;
+    }
+
+    public void setArrivalAirport(String arrivalAirport) {
+        this.arrivalAirport = arrivalAirport;
+    }
 
     public Date getDepartureDate() {
         return departureDate;
@@ -69,5 +89,9 @@ public class FlightFlysasCom extends Flight implements IFlightFlysasCom {
 
     public void setFee(double fee) {
         this.fee = fee;
+    }
+
+    public double getCheapestPrice() {
+        return cheapestPrice;
     }
 }

@@ -1,6 +1,7 @@
 package lt.vianet.extractor.Actions;
 
 import lt.vianet.extractor.extraction.FlysasComDataExtraction;
+import lt.vianet.extractor.io.FlysasComPageDataFile;
 import lt.vianet.extractor.page_adapters.WebPage;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -35,10 +36,10 @@ public class FlysasCom {
         WebPage webPage = new WebPage("https://book.flysas.com/");
 
         //TODO returns to the web page scan
-        webPage.setHTML(getHTMLusingSelenium(departureAirport, arrivalAirport, pageURL, dayForward, dayReturn));
+//        webPage.setHTML(getHTMLusingSelenium(departureAirport, arrivalAirport, pageURL, dayForward, dayReturn));
 
         //TODO loads Data from File
-//            webPage.setHTML(new FlysasComPageDataFile().getFlysasComPageData());
+            webPage.setHTML(new FlysasComPageDataFile().getFlysasComPageData());
 
         webPage.setEncoding("utf-8");
 
@@ -53,7 +54,7 @@ public class FlysasCom {
 
         WebDriver driver = new FirefoxDriver();
         driver.get(pageURL);
-        
+
 //        driver.manage().window().maximize();
 
         driver.manage().deleteAllCookies();
