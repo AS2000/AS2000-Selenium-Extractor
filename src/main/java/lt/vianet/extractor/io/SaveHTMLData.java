@@ -1,7 +1,7 @@
 package lt.vianet.extractor.io;
 
 import lt.vianet.extractor.cleaning_process.CleanWebDomain;
-import lt.vianet.extractor.flight_class.Flight;
+import lt.vianet.extractor.flight_class.FlightNorwegianCom;
 import lt.vianet.extractor.page_adapters.WebPage;
 
 import java.io.File;
@@ -14,7 +14,7 @@ public class SaveHTMLData {
     final private static String DATA_FOLDER_NAME = "extraction_data";
     private static String NAME_OF_SAVE_FILE;
     private WebPage webPage;
-    private Flight flight;
+    private FlightNorwegianCom flight;
 
     public SaveHTMLData() {
     }
@@ -23,10 +23,11 @@ public class SaveHTMLData {
         this.webPage = webPage;
     }
 
-    public SaveHTMLData(Flight flight) {
+    public SaveHTMLData(FlightNorwegianCom flight) {
         this.flight = flight;
     }
-    public SaveHTMLData(WebPage webPage, Flight flight) {
+
+    public SaveHTMLData(WebPage webPage, FlightNorwegianCom flight) {
         this.webPage = webPage;
         this.flight = flight;
     }
@@ -81,7 +82,7 @@ public class SaveHTMLData {
     }
 
 
-    private void writeDatatoFile(Flight flight) {
+    private void writeDatatoFile(FlightNorwegianCom flight) {
         try {
             FileWriter writer = new FileWriter(DATA_FOLDER_NAME + File.separator + NAME_OF_SAVE_FILE, true);
 

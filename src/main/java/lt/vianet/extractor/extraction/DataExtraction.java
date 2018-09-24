@@ -1,6 +1,6 @@
 package lt.vianet.extractor.extraction;
 
-import lt.vianet.extractor.flight_class.Flight;
+import lt.vianet.extractor.flight_class.FlightNorwegianCom;
 import lt.vianet.extractor.page_adapters.WebPage;
 
 import static lt.vianet.extractor.Actions.Actions.CURRANCY;
@@ -16,13 +16,13 @@ public class DataExtraction {
         this.webPage = webPage;
     }
 
-    public Flight getData(Flight flight) {
+    public FlightNorwegianCom getData(FlightNorwegianCom flight) {
 
         return extractDataFromHTML(flight);
     }
 
 
-    private Flight extractDataFromHTML(Flight flight) {
+    private FlightNorwegianCom extractDataFromHTML(FlightNorwegianCom flight) {
 
 
         extractTime(flight);
@@ -35,7 +35,7 @@ public class DataExtraction {
     }
 
 
-    private void extractTime(Flight flight) {
+    private void extractTime(FlightNorwegianCom flight) {
 
         StringBuffer buffer = new StringBuffer();
         buffer.append(webPage.getHTML());
@@ -82,7 +82,7 @@ public class DataExtraction {
     }
 
 
-    private void extractPrice(Flight flight) {
+    private void extractPrice(FlightNorwegianCom flight) {
 
         StringBuffer buffer = new StringBuffer();
 

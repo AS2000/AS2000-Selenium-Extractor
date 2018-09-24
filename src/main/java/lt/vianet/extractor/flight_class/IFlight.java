@@ -1,33 +1,23 @@
 package lt.vianet.extractor.flight_class;
 
 
+import java.util.Date;
+
 public interface IFlight {
+
+    public void setDepartureAirport(String departureAirport);
 
     public String getDepartureAirport();
 
+    public void setArrivalAirport(String arrivalAirport);
+
     public String getArrivalAirport();
 
-    public String getDepartureMonth();
-
-    public String getDepartureDay();
-
     public String getFlightNumber();
-
-    public String getArrivalDate();
-
-    public void setArrivalDate(String arrivalDate);
 
     public String getConnectionAirport();
 
     public void setConnectionAirport(String connectionAirport);
-
-    public String getDepartureTime();
-
-    public void setDepartureTime(String departureTime);
-
-    public String getArrivalTime();
-
-    public void setArrivalTime(String arrivalTime);
 
     public String getBoundTag();
 

@@ -5,7 +5,7 @@ import lt.vianet.extractor.cleaning_process.TrimSpaces;
 import lt.vianet.extractor.extraction.DataExtraction;
 import lt.vianet.extractor.extraction.FlightQty;
 import lt.vianet.extractor.extraction.GeneratePageLink;
-import lt.vianet.extractor.flight_class.Flight;
+import lt.vianet.extractor.flight_class.FlightNorwegianCom;
 import lt.vianet.extractor.io.SaveHTMLData;
 import lt.vianet.extractor.io.URLReader;
 import lt.vianet.extractor.page_adapters.WebPage;
@@ -21,14 +21,11 @@ public class NorwegianCom {
     }
 
     private void getNorwegianCom() {
-        String departureMonth;
         String departureDay;
-        int depatureFirstDay;
-        int depatureLastDay;
 
-        departureMonth = "201810";
-        depatureFirstDay = 1;
-        depatureLastDay = 31;
+        String departureMonth = "201810";
+        int depatureFirstDay = 1;
+        int depatureLastDay = 31;
 
         for (int i = depatureFirstDay; i <= depatureLastDay; i++) {
 
@@ -48,7 +45,7 @@ public class NorwegianCom {
             checkFlightQty(webPage);
 
 
-            List<Flight> flightList = new ArrayList<>();
+            List<FlightNorwegianCom> flightList = new ArrayList<>();
 
             for (int y = 0; y < webPage.getFlightNumbers().size(); y++) {
 
@@ -82,13 +79,13 @@ public class NorwegianCom {
     }
 
 
-    private Flight createFlightObject(String departureAirport, String arrivalAirport, String departureMonth, String departureDay, String flightNumber) {
+    private FlightNorwegianCom createFlightObject(String departureAirport, String arrivalAirport, String departureMonth, String departureDay, String flightNumber) {
 
-        return new Flight(departureAirport, arrivalAirport, departureMonth, departureDay, flightNumber);
+        return new FlightNorwegianCom(departureAirport, arrivalAirport, departureMonth, departureDay, flightNumber);
     }
 
 
-    private void fillFlightObjectsWithData(List<Flight> flightList, WebPage webPage) {
+    private void fillFlightObjectsWithData(List<FlightNorwegianCom> flightList, WebPage webPage) {
 
         DataExtraction dex = new DataExtraction(webPage);
 
@@ -114,7 +111,7 @@ public class NorwegianCom {
         new SaveHTMLData(webPage).saveHTML();
     }
 
-    private void saveData(WebPage webPage, Flight flight) {
+    private void saveData(WebPage webPage, FlightNorwegianCom flight) {
 
         new SaveHTMLData(webPage, flight).saveData();
     }

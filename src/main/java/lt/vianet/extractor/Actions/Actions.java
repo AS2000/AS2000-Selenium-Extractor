@@ -10,7 +10,7 @@ public class Actions {
 
     private void doActions() {
 
-//        new NorwegianCom().doActions();
+        new NorwegianCom().doActions();
 
         new FlysasCom().doActions();
     }

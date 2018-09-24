@@ -1,8 +1,7 @@
 package lt.vianet.extractor.Actions;
 
-import lt.vianet.extractor.cleaning_process.ReplaceTabWithSpaces;
-import lt.vianet.extractor.cleaning_process.TrimSpaces;
 import lt.vianet.extractor.extraction.FlysasComDataExtraction;
+import lt.vianet.extractor.io.FlysasComPageDataFile;
 import lt.vianet.extractor.page_adapters.WebPage;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -22,12 +21,17 @@ public class FlysasCom {
     }
 
     private void getFlysasCom() {
-        String departureMonth;
-        String departureDay;
         int depatureFirstDay;
         int depatureLastDay;
 
-        departureMonth = "201810";
+        String departureAirport = "ARN";
+        String arrivalAirport = "LHR";
+
+        String pageURL = "https://classic.flysas.com/en/uk/";
+        String dayForward = "8";
+        String dayReturn = "14";
+
+
         depatureFirstDay = 8;
         // 8 - 14
         depatureLastDay = 8;
@@ -39,51 +43,52 @@ public class FlysasCom {
 
             WebPage webPage = new WebPage("https://book.flysas.com/");
 
-            //TODO return to scan web page
-            webPage.setHTML(getHTMLusingSelenium());
+            //TODO returns to the web page scan
+//            webPage.setHTML(getHTMLusingSelenium(flightFrom, flightTo, pageURL, dayForward, dayReturn));
 
-            //TODO delete Data load from File
-//            webPage.setHTML(new FlysasComPageDataFile().getFlysasComPageData());
+            //TODO loads Data from File
+            webPage.setHTML(new FlysasComPageDataFile().getFlysasComPageData());
 
             webPage.setEncoding("utf-8");
 
-            cleanHTML(webPage);
-            fillFlySasData(webPage);
+            fillFlySasData(webPage, departureAirport, arrivalAirport, dayForward, dayReturn);
 
 
         }
     }
 
-    private String getHTMLusingSelenium() {
+    private String getHTMLusingSelenium(String departureAirport, String arrivalAirport, String pageURL, String dayForward, String dayReturn) {
 
-
-//http://toolsqa.com/selenium-webdriver/browser-commands/
+        //http://toolsqa.com/selenium-webdriver/browser-commands/
         System.setProperty("webdriver.gecko.driver", "C:\\Program Files\\geckodriver\\geckodriver.exe");
 
-        String flightFrom = "ARN";
-        String flightTo = "LHR";
-
         WebDriver driver = new FirefoxDriver();
-        driver.get("https://classic.flysas.com/en/uk/");
-        String dayForward = "8";
-        String dayReturn = "14";
 
 //        driver.manage().window().maximize();
 
         driver.manage().deleteAllCookies();
 
         // TODO Move oneWayFlight (Boolean) variable to the top
-        Boolean oneWayFlight = false;
+        Boolean oneWayFlight;
+
+        if (dayReturn.equals("0")) {
+
+            oneWayFlight = true;
+
+        } else {
+            oneWayFlight = false;
+        }
+
 
         if (oneWayFlight == true) {
 
             setOneWayFlight(driver);
-            setDestinationFromTo(driver, flightFrom, flightTo);
-            setDestinationFromTo(driver, flightFrom, flightTo);
+            setDestinationFromTo(driver, departureAirport, arrivalAirport);
+            setDestinationFromTo(driver, departureAirport, arrivalAirport);
 
         } else {
             setRoundFlight(driver);
-            setDestinationFromTo(driver, flightFrom, flightTo);
+            setDestinationFromTo(driver, departureAirport, arrivalAirport);
             setFlightDate(driver, dayForward, dayReturn);
         }
 //
@@ -198,7 +203,6 @@ public class FlysasCom {
     }
 
 
-
     private void waitForPageToReload(WebDriver driver, String idTag) {
 
         // http://qaru.site/questions/1143117/selenium-ajax-wait-if-ajax-returns-no-elements
@@ -234,14 +238,7 @@ public class FlysasCom {
     }
 
 
-    private void cleanHTML(WebPage webPage) {
-
-        webPage = new ReplaceTabWithSpaces(webPage).cleanTheHTML();
-        new TrimSpaces(webPage).getTrimedHTML();
-
-    }
-
-    private void fillFlySasData(WebPage webPage) {
+    private void fillFlySasData(WebPage webPage, String departureAirport, String arrivalAirport, String dayForward, String dayReturn) {
 
         //TODO add return with ArrayList(Flights)
         new FlysasComDataExtraction(webPage).getFlightsData();
