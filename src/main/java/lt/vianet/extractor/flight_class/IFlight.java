@@ -1,17 +1,15 @@
 package lt.vianet.extractor.flight_class;
 
 
-import java.util.Date;
-
 public interface IFlight {
-
-    public void setDepartureAirport(String departureAirport);
 
     public String getDepartureAirport();
 
-    public void setArrivalAirport(String arrivalAirport);
+    public void setDepartureAirport(String departureAirport);
 
     public String getArrivalAirport();
+
+    public void setArrivalAirport(String arrivalAirport);
 
     public String getFlightNumber();
 

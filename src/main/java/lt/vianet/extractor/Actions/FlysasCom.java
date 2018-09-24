@@ -1,7 +1,6 @@
 package lt.vianet.extractor.Actions;
 
 import lt.vianet.extractor.extraction.FlysasComDataExtraction;
-import lt.vianet.extractor.io.FlysasComPageDataFile;
 import lt.vianet.extractor.page_adapters.WebPage;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -21,8 +20,6 @@ public class FlysasCom {
     }
 
     private void getFlysasCom() {
-        int depatureFirstDay;
-        int depatureLastDay;
 
         String departureAirport = "ARN";
         String arrivalAirport = "LHR";
@@ -32,30 +29,22 @@ public class FlysasCom {
         String dayReturn = "14";
 
 
-        depatureFirstDay = 8;
-        // 8 - 14
-        depatureLastDay = 8;
-
-        for (int i = depatureFirstDay; i <= depatureLastDay; i++) {
-
 // ARN (Stockholm) to LHR (London) departing 2018-10-08 and returning 2018-10-14.
 // Only data for flights that are direct or have a connection at Oslo should be accepted.
 
-            WebPage webPage = new WebPage("https://book.flysas.com/");
+        WebPage webPage = new WebPage("https://book.flysas.com/");
 
-            //TODO returns to the web page scan
-//            webPage.setHTML(getHTMLusingSelenium(flightFrom, flightTo, pageURL, dayForward, dayReturn));
+        //TODO returns to the web page scan
+        webPage.setHTML(getHTMLusingSelenium(departureAirport, arrivalAirport, pageURL, dayForward, dayReturn));
 
-            //TODO loads Data from File
-            webPage.setHTML(new FlysasComPageDataFile().getFlysasComPageData());
+        //TODO loads Data from File
+//            webPage.setHTML(new FlysasComPageDataFile().getFlysasComPageData());
 
-            webPage.setEncoding("utf-8");
+        webPage.setEncoding("utf-8");
 
-            fillFlySasData(webPage, departureAirport, arrivalAirport, dayForward, dayReturn);
-
-
-        }
+        fillFlySasData(webPage, departureAirport, arrivalAirport, dayForward, dayReturn);
     }
+
 
     private String getHTMLusingSelenium(String departureAirport, String arrivalAirport, String pageURL, String dayForward, String dayReturn) {
 
@@ -63,7 +52,8 @@ public class FlysasCom {
         System.setProperty("webdriver.gecko.driver", "C:\\Program Files\\geckodriver\\geckodriver.exe");
 
         WebDriver driver = new FirefoxDriver();
-
+        driver.get(pageURL);
+        
 //        driver.manage().window().maximize();
 
         driver.manage().deleteAllCookies();
@@ -91,7 +81,6 @@ public class FlysasCom {
             setDestinationFromTo(driver, departureAirport, arrivalAirport);
             setFlightDate(driver, dayForward, dayReturn);
         }
-//
 
 
         String idTag = "suspiciousActivity";
@@ -100,7 +89,6 @@ public class FlysasCom {
         acceptJsAlert(driver);
 
 
-// driver.getPageSource(); : String – This method returns the Source Code of the page. Accepts nothing as a parameter and returns a String value.
 // driver.close();
 
 

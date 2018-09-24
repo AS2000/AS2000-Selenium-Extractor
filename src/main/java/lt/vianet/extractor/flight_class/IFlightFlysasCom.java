@@ -13,21 +13,17 @@ public interface IFlightFlysasCom extends IFlight {
 
     public void setArrivalDate(Date arrivalDate);
 
-    public void setTax(double tax);
-
     public double getTax();
 
-    public void setPriceWithoutTax(double priceWitoutTax);
+    public void setTax(double tax);
 
     public double getPriceWithoutTax();
 
-    public void setFee(double fee);
+    public void setPriceWithoutTax(double priceWitoutTax);
 
     public double getFee();
 
-
-
-
+    public void setFee(double fee);
 
 
 }

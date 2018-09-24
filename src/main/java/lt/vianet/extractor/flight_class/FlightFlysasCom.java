@@ -47,27 +47,27 @@ public class FlightFlysasCom extends Flight implements IFlightFlysasCom {
         this.arrivalDate = arrivalDate;
     }
 
-    public void setTax(double tax) {
-        this.tax = tax;
-    }
-
     public double getTax() {
         return tax;
     }
 
-    public void setPriceWithoutTax(double priceWitoutTax) {
-        this.priceWitoutTax = priceWitoutTax;
+    public void setTax(double tax) {
+        this.tax = tax;
     }
 
     public double getPriceWithoutTax() {
         return priceWitoutTax;
     }
 
-    public void setFee(double fee) {
-        this.fee = fee;
+    public void setPriceWithoutTax(double priceWitoutTax) {
+        this.priceWitoutTax = priceWitoutTax;
     }
 
     public double getFee() {
         return fee;
+    }
+
+    public void setFee(double fee) {
+        this.fee = fee;
     }
 }

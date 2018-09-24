@@ -69,7 +69,7 @@ public class FlysasComDataExtraction {
 
         int flightObjectMark = 1;
 
-        while ((flightObjectMark = buffer.indexOf("var segment = new Object();", flightObjectMark)) > 0 && flightObjectMark < buffer.length()){
+        while ((flightObjectMark = buffer.indexOf("var segment = new Object();", flightObjectMark)) > 0 && flightObjectMark < buffer.length()) {
 
             departureAirportFromPage = buffer.substring((flightObjectMark = buffer.indexOf("segment.bLocation   = \"", flightObjectMark) + 23), (flightObjectMark += 3));
             arrivalAirportFromPage = buffer.substring((flightObjectMark = buffer.indexOf("segment.eLocation   = \"", flightObjectMark) + 23), (flightObjectMark += 3));
@@ -77,7 +77,7 @@ public class FlysasComDataExtraction {
             try {
                 departureDate = flyghtDateFormat.parse(buffer.substring((flightObjectMark = buffer.indexOf("segment.bDate = \"", flightObjectMark) + 17), (flightObjectMark += 28)));
                 arrivalDate = flyghtDateFormat.parse(buffer.substring((flightObjectMark = buffer.indexOf("segment.eDate =\t\"", flightObjectMark) + 17), (flightObjectMark += 28)));
-            } catch (ParseException pe){
+            } catch (ParseException pe) {
                 System.out.println("You catched Parse Exception: " + pe);
             }
             flightList.add(new FlightFlysasCom(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate));
