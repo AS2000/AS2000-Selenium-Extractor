@@ -1,7 +1,9 @@
 package lt.vianet.extractor.Actions;
 
 import lt.vianet.extractor.extraction.FlysasComDataExtraction;
+import lt.vianet.extractor.flight_class.AllFlysasComFlightLists;
 import lt.vianet.extractor.io.FlysasComPageDataFile;
+import lt.vianet.extractor.io.SaveDataFlysasCom;
 import lt.vianet.extractor.page_adapters.WebPage;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -24,11 +26,14 @@ public class FlysasCom {
 
         String departureAirport = "ARN";
         String arrivalAirport = "LHR";
+        String connectionAirport = "OSL";
 
         String pageURL = "https://classic.flysas.com/en/uk/";
         String dayForward = "8";
         String dayReturn = "14";
 
+        //All Flit List
+        AllFlysasComFlightLists allFlysasComFlightLists = new AllFlysasComFlightLists();
 
 // ARN (Stockholm) to LHR (London) departing 2018-10-08 and returning 2018-10-14.
 // Only data for flights that are direct or have a connection at Oslo should be accepted.
@@ -43,7 +48,10 @@ public class FlysasCom {
 
         webPage.setEncoding("utf-8");
 
-        fillFlySasData(webPage, departureAirport, arrivalAirport, dayForward, dayReturn);
+        fillFlySasData(webPage, departureAirport, arrivalAirport, connectionAirport, dayForward, dayReturn, allFlysasComFlightLists);
+
+        //Save Data to File
+        new SaveDataFlysasCom(allFlysasComFlightLists).saveData();
     }
 
 
@@ -227,10 +235,10 @@ public class FlysasCom {
     }
 
 
-    private void fillFlySasData(WebPage webPage, String departureAirport, String arrivalAirport, String dayForward, String dayReturn) {
+    private void fillFlySasData(WebPage webPage, String departureAirport, String arrivalAirport,String connectionAirport, String dayForward, String dayReturn, AllFlysasComFlightLists allFlysasComFlightLists) {
 
-        //TODO add return with ArrayList(Flights)
-        new FlysasComDataExtraction(webPage).getFlightsData();
+
+        new FlysasComDataExtraction(webPage, departureAirport, arrivalAirport, connectionAirport, dayForward, dayReturn, allFlysasComFlightLists).getFlightsData();
     }
 
 }

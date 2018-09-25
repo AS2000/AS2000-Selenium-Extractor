@@ -16,6 +16,8 @@ public class FlightFlysasCom extends Flight implements IFlightFlysasCom {
     public FlightFlysasCom() {
     }
 
+
+    /* DIRECT FLIGHT Constructor: */
     public FlightFlysasCom(String departureAirport, String arrivalAirport, Date departureDate, Date arrivalDate, double cheapestPrice, double tax, double priceWitoutTax, double fee) {
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
@@ -27,12 +29,21 @@ public class FlightFlysasCom extends Flight implements IFlightFlysasCom {
         this.fee = fee;
     }
 
+    /* CONNECTED FLIGHT Constructor: */
+    public FlightFlysasCom(String departureAirport, String arrivalAirport, Date departureDate, Date arrivalDate) {
+        this.departureAirport = departureAirport;
+        this.arrivalAirport = arrivalAirport;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+    }
+
     public FlightFlysasCom(String departureAirport, String arrivalAirport, Date departureDate, String flightNumber) {
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.departureDate = departureDate;
         this.flightNumber = flightNumber;
     }
+
 
     public String getDepartureAirport() {
         return departureAirport;
