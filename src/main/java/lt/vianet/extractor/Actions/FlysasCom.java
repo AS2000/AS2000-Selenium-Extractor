@@ -41,10 +41,10 @@ public class FlysasCom {
         WebPage webPage = new WebPage("https://book.flysas.com/");
 
         //TODO returns to the web page scan
-//        webPage.setHTML(getHTMLusingSelenium(departureAirport, arrivalAirport, pageURL, dayForward, dayReturn));
+        webPage.setHTML(getHTMLusingSelenium(departureAirport, arrivalAirport, pageURL, dayForward, dayReturn));
 
         //TODO loads Data from File
-            webPage.setHTML(new FlysasComPageDataFile().getFlysasComPageData());
+//        webPage.setHTML(new FlysasComPageDataFile().getFlysasComPageData());
 
         webPage.setEncoding("utf-8");
 
@@ -98,7 +98,7 @@ public class FlysasCom {
         acceptJsAlert(driver);
 
 
-// driver.close();
+//        driver.close();
 
 
         return getHTMLfromPage(driver);
@@ -187,10 +187,6 @@ public class FlysasCom {
         driver.findElement(By.xpath("//form//input[@class='flInDate hasDatepicker']")).click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
-        // Select Next Month
-        driver.findElement(By.xpath("//a/span[@class='ui-icon ui-icon-circle-triangle-e']")).click();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
         // Select Day
         driver.findElement(By.linkText(dayReturn)).click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -235,7 +231,7 @@ public class FlysasCom {
     }
 
 
-    private void fillFlySasData(WebPage webPage, String departureAirport, String arrivalAirport,String connectionAirport, String dayForward, String dayReturn, AllFlysasComFlightLists allFlysasComFlightLists) {
+    private void fillFlySasData(WebPage webPage, String departureAirport, String arrivalAirport, String connectionAirport, String dayForward, String dayReturn, AllFlysasComFlightLists allFlysasComFlightLists) {
 
 
         new FlysasComDataExtraction(webPage, departureAirport, arrivalAirport, connectionAirport, dayForward, dayReturn, allFlysasComFlightLists).getFlightsData();

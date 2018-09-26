@@ -39,23 +39,18 @@ public class FlysasComDataExtraction {
         this.allFlysasComFlightLists = allFlysasComFlightLists;
     }
 
-
     public void getFlightsData() {
 
         extractFlightData();
     }
 
-
     private void extractFlightData() {
 
         getFlightObjectList();
-
-
     }
 
     private void getFlightObjectList() {
 
-        List<FlightFlysasCom> flightList = new ArrayList<FlightFlysasCom>();
         List<FlightFlysasCom> directFlightListForward = new ArrayList<FlightFlysasCom>();
         List<FlightFlysasCom> directFlightListReturn = new ArrayList<FlightFlysasCom>();
         List<FlightFlysasComList> connectedFlightListForward = new ArrayList<FlightFlysasComList>();
