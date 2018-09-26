@@ -174,7 +174,7 @@ public class FlysasComDataExtraction {
 
                     while (dataMark > 0 && dataMark < blockBuffer.length()) {
                         // CONNECTED FORWARD Flight
-                        if (departureAirport.equals(departureAirportFromPage) && connectionAirport.equals(arrivalAirportFromPage)) {
+                        if ((departureAirport.equals(departureAirportFromPage) && connectionAirport.equals(arrivalAirportFromPage)) || (connectionAirport.equals(departureAirportFromPage) && arrivalAirport.equals(arrivalAirportFromPage))) {
 
                             if (connectedFlightListForward.size() != 0) {
 
@@ -200,7 +200,7 @@ public class FlysasComDataExtraction {
                             }
                         }
 
-                        if (connectionAirport.equals(departureAirportFromPage) && arrivalAirport.equals(arrivalAirportFromPage)) {
+                        if ((arrivalAirport.equals(departureAirportFromPage) && connectionAirport.equals(departureAirportFromPage)) || (connectionAirport.equals(departureAirportFromPage) && departureAirport.equals(arrivalAirportFromPage))) {
 
                             if (connectedFlightListReturn.size() != 0) {
 
@@ -229,7 +229,6 @@ public class FlysasComDataExtraction {
 
                         dataMark = blockBuffer.indexOf("segment.bookingClass = \"", dataMark);
 
-                        //TODO Check this place
                         // Check for the end of the Block
                         if (dataMark < 0) {
                             dataMark = connectedBlockMarkEnd;

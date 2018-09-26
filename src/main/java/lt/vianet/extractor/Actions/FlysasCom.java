@@ -41,10 +41,10 @@ public class FlysasCom {
         WebPage webPage = new WebPage("https://book.flysas.com/");
 
         //TODO returns to the web page scan
-        webPage.setHTML(getHTMLusingSelenium(departureAirport, arrivalAirport, pageURL, dayForward, dayReturn));
+//        webPage.setHTML(getHTMLusingSelenium(departureAirport, arrivalAirport, pageURL, dayForward, dayReturn));
 
         //TODO loads Data from File
-//        webPage.setHTML(new FlysasComPageDataFile().getFlysasComPageData());
+        webPage.setHTML(new FlysasComPageDataFile().getFlysasComPageData());
 
         webPage.setEncoding("utf-8");
 
