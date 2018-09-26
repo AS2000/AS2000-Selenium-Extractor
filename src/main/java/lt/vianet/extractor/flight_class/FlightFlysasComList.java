@@ -31,7 +31,7 @@ public class FlightFlysasComList implements IFlightFlysasComList {
         this.priceWitoutTax = priceWitoutTax;
         this.fee = fee;
     }
-    
+
 
     public int getListID() {
         return listID;
@@ -45,7 +45,7 @@ public class FlightFlysasComList implements IFlightFlysasComList {
         this.listID = listID;
     }
 
-    public List getFlightsList() {
+    public List<FlightFlysasCom> getFlightsList() {
         return flightList;
     }
 

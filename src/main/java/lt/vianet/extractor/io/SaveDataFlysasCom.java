@@ -2,6 +2,8 @@ package lt.vianet.extractor.io;
 
 import lt.vianet.extractor.cleaning_process.CleanWebDomain;
 import lt.vianet.extractor.flight_class.AllFlysasComFlightLists;
+import lt.vianet.extractor.flight_class.FlightFlysasCom;
+import lt.vianet.extractor.flight_class.FlightFlysasComList;
 import lt.vianet.extractor.page_adapters.WebPage;
 
 import java.io.File;
@@ -94,14 +96,19 @@ public class SaveDataFlysasCom {
                         + "  " + allFlysasComFlightLists.getConnectedFlightListForward().get(i).getTax()
                         + "  " + allFlysasComFlightLists.getConnectedFlightListForward().get(i).getFee();
                 writer.write("  Connected Flight Forward:" + flightString);
-//                flightString = "First Flight: " + allFlysasComFlightLists.getConnectedFlightListForward().get(i).getFlightsList().get(0)
-//                        + "Second Flight: " + allFlysasComFlightLists.getConnectedFlightListForward().get(i).getFlightsList().get(1)
-//                        + "";
 
-
-                writer.write("Connected Flight Forward:" + flightString + "");
+                flightString = "  First Flight: "
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListForward().get(i).getFlightsList().get(0).getDepartureAirport()
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListForward().get(i).getFlightsList().get(0).getDepartureDate()
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListForward().get(i).getFlightsList().get(0).getArrivalAirport()
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListForward().get(i).getFlightsList().get(0).getArrivalDate()
+                        + "  Second Flight: "
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListForward().get(i).getFlightsList().get(1).getDepartureAirport()
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListForward().get(i).getFlightsList().get(1).getDepartureDate()
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListForward().get(i).getFlightsList().get(1).getArrivalAirport()
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListForward().get(i).getFlightsList().get(1).getArrivalDate();
+                writer.write(flightString + "");
             }
-
 
 
             for (int i = 0; i < allFlysasComFlightLists.getConnectedFlightListReturn().size(); i++) {
@@ -113,12 +120,19 @@ public class SaveDataFlysasCom {
                         + "  " + allFlysasComFlightLists.getConnectedFlightListReturn().get(i).getTax()
                         + "  " + allFlysasComFlightLists.getConnectedFlightListReturn().get(i).getFee();
 
-                writer.write("  Connected Flight Forward:" + flightString);
-//                flightString = "First Flight: " + allFlysasComFlightLists.getConnectedFlightListReturn().get(i).getFlightsList().get(0).toString()
-//                        + "Second Flight: " + allFlysasComFlightLists.getConnectedFlightListReturn().get(i).getFlightsList().get(1).toString()
-//                        + "";
+                writer.write("  Connected Flight Return:" + flightString);
 
-                writer.write("  Connected Flight Forward: " + flightString + "");
+                flightString = "  First Flight: "
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListReturn().get(i).getFlightsList().get(0).getDepartureAirport()
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListReturn().get(i).getFlightsList().get(0).getDepartureDate()
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListReturn().get(i).getFlightsList().get(0).getArrivalAirport()
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListReturn().get(i).getFlightsList().get(0).getArrivalDate()
+                        + "  Second Flight: "
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListReturn().get(i).getFlightsList().get(1).getDepartureAirport()
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListReturn().get(i).getFlightsList().get(1).getDepartureDate()
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListReturn().get(i).getFlightsList().get(1).getArrivalAirport()
+                        + "  " + allFlysasComFlightLists.getConnectedFlightListReturn().get(i).getFlightsList().get(1).getArrivalDate();
+                writer.write(flightString + "");
             }
 
             writer.write(System.lineSeparator());
