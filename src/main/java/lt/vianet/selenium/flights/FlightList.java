@@ -1,4 +1,4 @@
-package lt.vianet.extractor.flight_class;
+package lt.vianet.selenium.flights;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +12,17 @@ public class FlightFlysasComList implements IFlightFlysasComList {
     private double priceWitoutTax;
     private double fee;
 
-    private List<FlightFlysasCom> flightList = new ArrayList<FlightFlysasCom>();
+    private List<IFlight> flightList = new ArrayList<IFlight>();
 
     // Constructor without price
-    public FlightFlysasComList(int listID, String bookingClass, FlightFlysasCom flight) {
+    public FlightFlysasComList(int listID, String bookingClass, Flight flight) {
         this.listID = listID;
         this.bookingClass = bookingClass;
         this.flightList.add(flight);
     }
 
     // Constructor with price
-    public FlightFlysasComList(int listID, String bookingClass, FlightFlysasCom flight, double cheapestPrice, double tax, double priceWitoutTax, double fee) {
+    public FlightFlysasComList(int listID, String bookingClass, Flight flight, double cheapestPrice, double tax, double priceWitoutTax, double fee) {
         this.listID = listID;
         this.bookingClass = bookingClass;
         this.flightList.add(flight);
@@ -45,7 +45,7 @@ public class FlightFlysasComList implements IFlightFlysasComList {
         this.listID = listID;
     }
 
-    public List<FlightFlysasCom> getFlightsList() {
+    public List<IFlight> getFlightsList() {
         return flightList;
     }
 

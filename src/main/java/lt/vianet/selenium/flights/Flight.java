@@ -1,8 +1,9 @@
-package lt.vianet.extractor.flight_class;
+package lt.vianet.selenium.flight_class;
 
 import java.util.Date;
 
-public class FlightFlysasCom extends Flight implements IFlightFlysasCom {
+
+public class Flight implements IFlight {
     private String departureAirport;
     private String arrivalAirport;
     private Date departureDate;
@@ -13,12 +14,11 @@ public class FlightFlysasCom extends Flight implements IFlightFlysasCom {
     private double priceWitoutTax;
     private double fee;
 
-    public FlightFlysasCom() {
+    public Flight() {
     }
 
-
     /* DIRECT FLIGHT Constructor: */
-    public FlightFlysasCom(String departureAirport, String arrivalAirport, Date departureDate, Date arrivalDate, double cheapestPrice, double tax, double priceWitoutTax, double fee) {
+    public Flight(String departureAirport, String arrivalAirport, Date departureDate, Date arrivalDate, double cheapestPrice, double tax, double priceWitoutTax, double fee) {
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.departureDate = departureDate;
@@ -30,14 +30,14 @@ public class FlightFlysasCom extends Flight implements IFlightFlysasCom {
     }
 
     /* CONNECTED FLIGHT Constructor: */
-    public FlightFlysasCom(String departureAirport, String arrivalAirport, Date departureDate, Date arrivalDate) {
+    public Flight(String departureAirport, String arrivalAirport, Date departureDate, Date arrivalDate) {
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
     }
 
-    public FlightFlysasCom(String departureAirport, String arrivalAirport, Date departureDate, String flightNumber) {
+    public Flight(String departureAirport, String arrivalAirport, Date departureDate, String flightNumber) {
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
         this.departureDate = departureDate;
@@ -61,6 +61,7 @@ public class FlightFlysasCom extends Flight implements IFlightFlysasCom {
         this.arrivalAirport = arrivalAirport;
     }
 
+
     public Date getDepartureDate() {
         return departureDate;
     }
@@ -69,13 +70,17 @@ public class FlightFlysasCom extends Flight implements IFlightFlysasCom {
         this.departureDate = departureDate;
     }
 
-
     public Date getArrivalDate() {
         return arrivalDate;
     }
 
     public void setArrivalDate(Date arrivalDate) {
         this.arrivalDate = arrivalDate;
+    }
+
+
+    public void setCheapestPrice(double cheapestPrice) {
+        this.cheapestPrice = cheapestPrice;
     }
 
     public double getTax() {
@@ -105,4 +110,76 @@ public class FlightFlysasCom extends Flight implements IFlightFlysasCom {
     public double getCheapestPrice() {
         return cheapestPrice;
     }
+
+
 }
+
+
+
+
+
+
+
+
+/*
+public class Flight implements IFlight {
+    private String departureAirport;
+    private String arrivalAirport;
+    private String connectionAirport;
+    private String boundTag;
+    private double cheapestPrice;
+    private String flightNumber;
+
+    public Flight() {
+    }
+
+    public Flight(String departureAirport, String arrivalAirport, String flightNumber) {
+        this.departureAirport = departureAirport;
+        this.arrivalAirport = arrivalAirport;
+        this.flightNumber = flightNumber;
+    }
+
+    public String getDepartureAirport() {
+        return departureAirport;
+    }
+
+    public void setDepartureAirport(String departureAirport) {
+        this.departureAirport = departureAirport;
+    }
+
+    public String getArrivalAirport() {
+        return arrivalAirport;
+    }
+
+    public void setArrivalAirport(String arrivalAirport) {
+        this.arrivalAirport = arrivalAirport;
+    }
+
+    public String getFlightNumber() {
+        return flightNumber;
+    }
+
+    public String getConnectionAirport() {
+        return connectionAirport;
+    }
+
+    public void setConnectionAirport(String connectionAirport) {
+        this.connectionAirport = connectionAirport;
+    }
+
+    public String getBoundTag() {
+        return boundTag;
+    }
+
+    public void setBoundTag(String boundTag) {
+        this.boundTag = boundTag;
+    }
+
+    public double getCheapestPrice() {
+        return cheapestPrice;
+    }
+
+
+    }
+
+}*/
