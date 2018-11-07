@@ -2,7 +2,7 @@ package lt.vianet.selenium.flights;
 
 import java.util.List;
 
-public interface IFlightFlysasComList {
+public interface IFlightList {
 
     public int getListID();
 
@@ -28,7 +28,6 @@ public interface IFlightFlysasComList {
     public double getFee();
 
     public void setFee(double fee);
-
 
 
 }

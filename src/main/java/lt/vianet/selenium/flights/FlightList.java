@@ -3,7 +3,7 @@ package lt.vianet.selenium.flights;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlightFlysasComList implements IFlightFlysasComList {
+public class FlightList implements IFlightList {
 
     private int listID;
     private String bookingClass;
@@ -15,14 +15,14 @@ public class FlightFlysasComList implements IFlightFlysasComList {
     private List<IFlight> flightList = new ArrayList<IFlight>();
 
     // Constructor without price
-    public FlightFlysasComList(int listID, String bookingClass, Flight flight) {
+    public FlightList(int listID, String bookingClass, Flight flight) {
         this.listID = listID;
         this.bookingClass = bookingClass;
         this.flightList.add(flight);
     }
 
     // Constructor with price
-    public FlightFlysasComList(int listID, String bookingClass, Flight flight, double cheapestPrice, double tax, double priceWitoutTax, double fee) {
+    public FlightList(int listID, String bookingClass, Flight flight, double cheapestPrice, double tax, double priceWitoutTax, double fee) {
         this.listID = listID;
         this.bookingClass = bookingClass;
         this.flightList.add(flight);
@@ -49,6 +49,15 @@ public class FlightFlysasComList implements IFlightFlysasComList {
         return flightList;
     }
 
+
+    public double getCheapestPrice() {
+        return cheapestPrice;
+    }
+
+    public void setCheapestPrice(double cheapestPrice) {
+        this.cheapestPrice = cheapestPrice;
+    }
+
     public double getTax() {
         return tax;
     }
@@ -73,13 +82,6 @@ public class FlightFlysasComList implements IFlightFlysasComList {
         this.fee = fee;
     }
 
-    public double getCheapestPrice() {
-        return cheapestPrice;
-    }
-
-    public void setCheapestPrice(double cheapestPrice) {
-        this.cheapestPrice = cheapestPrice;
-    }
 
 
 }

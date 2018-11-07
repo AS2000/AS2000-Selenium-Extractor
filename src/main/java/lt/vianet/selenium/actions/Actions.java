@@ -1,16 +1,15 @@
-package lt.vianet.extractor.Actions;
+package lt.vianet.selenium.actions;
 
 public class Actions {
-    public static final String CURRANCY = "USD";
+
 
     public void startApp() {
 
         doActions();
     }
 
-    private void doActions() {
 
-//        new NorwegianCom().doActions();
+    private void doActions() {
 
         new FlysasCom().doActions();
     }

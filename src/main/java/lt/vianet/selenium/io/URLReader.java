@@ -1,6 +1,6 @@
-package lt.vianet.extractor.io;
+package lt.vianet.selenium.io;
 
-import lt.vianet.extractor.page_adapters.WebPage;
+import lt.vianet.selenium.page_adapters.WebPage;
 
 import java.io.BufferedReader;
 import java.io.IOException;

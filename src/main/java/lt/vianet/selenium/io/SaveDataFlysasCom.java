@@ -1,10 +1,7 @@
-package lt.vianet.extractor.io;
+package lt.vianet.selenium.io;
 
-import lt.vianet.extractor.cleaning_process.CleanWebDomain;
-import lt.vianet.extractor.flight_class.AllFlysasComFlightLists;
-import lt.vianet.extractor.flight_class.FlightFlysasCom;
-import lt.vianet.extractor.flight_class.FlightFlysasComList;
-import lt.vianet.extractor.page_adapters.WebPage;
+import lt.vianet.selenium.flights.AllFlysasComFlightLists;
+import lt.vianet.selenium.page_adapters.WebPage;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -42,9 +39,7 @@ public class SaveDataFlysasCom {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmm");
         String day_date = sdf.format(new Date());
 
-        String pageName = "FlysasCom";
-
-        NAME_OF_SAVE_FILE = "data_" + day_date + "_FlySas.com_Flights_" + pageName + ".txt";
+        NAME_OF_SAVE_FILE = "data_" + day_date + "_Flysas.com_Flights" + ".txt";
 
         writeDatatoFile();
     }

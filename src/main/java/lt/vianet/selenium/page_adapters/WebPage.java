@@ -1,4 +1,4 @@
-package lt.vianet.extractor.page_adapters;
+package lt.vianet.selenium.page_adapters;
 
 import java.util.List;
 

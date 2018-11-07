@@ -1,5 +1,4 @@
-package lt.vianet.selenium.flight_class;
-
+package lt.vianet.selenium.flights;
 
 
 import java.util.Date;

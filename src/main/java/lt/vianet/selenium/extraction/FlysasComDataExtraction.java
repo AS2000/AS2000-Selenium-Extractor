@@ -1,9 +1,7 @@
-package lt.vianet.extractor.extraction;
+package lt.vianet.selenium.extraction;
 
-import lt.vianet.extractor.flight_class.AllFlysasComFlightLists;
-import lt.vianet.extractor.flight_class.FlightFlysasCom;
-import lt.vianet.extractor.flight_class.FlightFlysasComList;
-import lt.vianet.extractor.page_adapters.WebPage;
+import lt.vianet.selenium.flights.*;
+import lt.vianet.selenium.page_adapters.WebPage;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -39,22 +37,19 @@ public class FlysasComDataExtraction {
         this.allFlysasComFlightLists = allFlysasComFlightLists;
     }
 
-    public void getFlightsData() {
 
-        extractFlightData();
+    public AllFlysasComFlightLists getFlightsData() {
+
+        return getFlightObjectList();
     }
 
-    private void extractFlightData() {
 
-        getFlightObjectList();
-    }
+    private AllFlysasComFlightLists getFlightObjectList() {
 
-    private void getFlightObjectList() {
-
-        List<FlightFlysasCom> directFlightListForward = new ArrayList<FlightFlysasCom>();
-        List<FlightFlysasCom> directFlightListReturn = new ArrayList<FlightFlysasCom>();
-        List<FlightFlysasComList> connectedFlightListForward = new ArrayList<FlightFlysasComList>();
-        List<FlightFlysasComList> connectedFlightListReturn = new ArrayList<FlightFlysasComList>();
+        List<IFlight> directFlightListForward = new ArrayList<IFlight>();
+        List<IFlight> directFlightListReturn = new ArrayList<IFlight>();
+        List<IFlightList> connectedFlightListForward = new ArrayList<IFlightList>();
+        List<IFlightList> connectedFlightListReturn = new ArrayList<IFlightList>();
 
         StringBuffer buffer = new StringBuffer();
         buffer.append(webPage.getHTML());
@@ -94,7 +89,6 @@ public class FlysasComDataExtraction {
                 departureDate = flyghtDateFormat.parse(buffer.substring((dataMark = buffer.indexOf("segment.bDate = \"", dataMark) + 17), (dataMark += 28)));
                 arrivalDate = flyghtDateFormat.parse(buffer.substring((dataMark = buffer.indexOf("segment.eDate =\t\"", dataMark) + 17), (dataMark += 28)));
 
-
                 // DIRECT FORWARD Flight
                 if (departureAirport.equals(departureAirportFromPage) && arrivalAirport.equals(arrivalAirportFromPage)) {
 
@@ -109,7 +103,6 @@ public class FlysasComDataExtraction {
                     dataMarkTemp = dataMark;
                     cheapestPrice = Double.parseDouble(buffer.substring(((dataMark = buffer.indexOf("\'price\':\'", dataMark) + 9)), (dataMark = buffer.indexOf(closeTag, dataMark))));
 
-                    //TODO Check this code
                     // Check for Direct Flights without price, if found: skip and restore search point (dataMark)
                     if (dataMark < 0) {
                         dataMark = dataMarkTemp;
@@ -120,7 +113,7 @@ public class FlysasComDataExtraction {
                     priceWitoutTax = Double.parseDouble(buffer.substring((dataMark = buffer.indexOf("\'priceWithoutTax\':\'", dataMark) + 19), (dataMark = buffer.indexOf(closeTag, dataMark))));
                     fee = Double.parseDouble(buffer.substring((dataMark = buffer.indexOf("\'fee\':\'", dataMark) + 7), (dataMark = buffer.indexOf(closeTag, dataMark))));
 
-                    directFlightListForward.add(new FlightFlysasCom(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate, cheapestPrice, tax, priceWitoutTax, fee));
+                    directFlightListForward.add(new Flight(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate, cheapestPrice, tax, priceWitoutTax, fee));
                     continue;
                 }
 
@@ -138,7 +131,6 @@ public class FlysasComDataExtraction {
                     dataMarkTemp = dataMark;
                     cheapestPrice = Double.parseDouble(buffer.substring((dataMark = buffer.indexOf("\'price\':\'", dataMark) + 9), (dataMark = buffer.indexOf(closeTag, dataMark))));
 
-                    //TODO Check this code
                     // Check for Direct Flights without price, if found: skip and restore search point (dataMark)
                     if (dataMark < 0) {
                         dataMark = dataMarkTemp;
@@ -148,7 +140,7 @@ public class FlysasComDataExtraction {
                     priceWitoutTax = Double.parseDouble(buffer.substring((dataMark = buffer.indexOf("\'priceWithoutTax\':\'", dataMark) + 19), (dataMark = buffer.indexOf(closeTag, dataMark))));
                     fee = Double.parseDouble(buffer.substring((dataMark = buffer.indexOf("\'fee\':\'", dataMark) + 7), (dataMark = buffer.indexOf(closeTag, dataMark))));
 
-                    directFlightListReturn.add(new FlightFlysasCom(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate, cheapestPrice, tax, priceWitoutTax, fee));
+                    directFlightListReturn.add(new Flight(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate, cheapestPrice, tax, priceWitoutTax, fee));
                     continue;
                 }
 
@@ -182,21 +174,21 @@ public class FlysasComDataExtraction {
 
                                     if (connectedFlightListForward.get(i).getListID() == listID && connectedFlightListForward.get(i).getBookingClass().equals(bookingClass)) {
 
-                                        connectedFlightListForward.get(i).getFlightsList().add(new FlightFlysasCom(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate));
+                                        connectedFlightListForward.get(i).getFlightsList().add(new Flight(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate));
 
                                         break;
 
                                     } else if (i == (connectedFlightListForward.size() - 1)) {
 
                                         //Needed if it will be more then 2 Connected Flights
-                                        connectedFlightListForward.add(new FlightFlysasComList(listID, bookingClass, new FlightFlysasCom(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate), cheapestPrice, tax, priceWitoutTax, fee));
+                                        connectedFlightListForward.add(new FlightList(listID, bookingClass, new Flight(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate), cheapestPrice, tax, priceWitoutTax, fee));
 
                                         break;
                                     }
                                 }
 
                             } else {
-                                connectedFlightListForward.add(new FlightFlysasComList(listID, bookingClass, new FlightFlysasCom(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate), cheapestPrice, tax, priceWitoutTax, fee));
+                                connectedFlightListForward.add(new FlightList(listID, bookingClass, new Flight(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate), cheapestPrice, tax, priceWitoutTax, fee));
                             }
                         }
 
@@ -208,21 +200,21 @@ public class FlysasComDataExtraction {
 
                                     if (connectedFlightListReturn.get(i).getListID() == listID && connectedFlightListReturn.get(i).getBookingClass().equals(bookingClass)) {
 
-                                        connectedFlightListReturn.get(i).getFlightsList().add(new FlightFlysasCom(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate));
+                                        connectedFlightListReturn.get(i).getFlightsList().add(new Flight(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate));
 
                                         break;
 
                                     } else if (i == (connectedFlightListReturn.size() - 1)) {
 
                                         //Needed if it will be more then 2 Connected Flights
-                                        connectedFlightListReturn.add(new FlightFlysasComList(listID, bookingClass, new FlightFlysasCom(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate), cheapestPrice, tax, priceWitoutTax, fee));
+                                        connectedFlightListReturn.add(new FlightList(listID, bookingClass, new Flight(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate), cheapestPrice, tax, priceWitoutTax, fee));
 
                                         break;
                                     }
                                 }
 
                             } else {
-                                connectedFlightListReturn.add(new FlightFlysasComList(listID, bookingClass, new FlightFlysasCom(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate), cheapestPrice, tax, priceWitoutTax, fee));
+                                connectedFlightListReturn.add(new FlightList(listID, bookingClass, new Flight(departureAirportFromPage, arrivalAirportFromPage, departureDate, arrivalDate), cheapestPrice, tax, priceWitoutTax, fee));
                             }
                         }
 
@@ -258,6 +250,7 @@ public class FlysasComDataExtraction {
         allFlysasComFlightLists.setDirectFlightListForward(directFlightListForward);
         allFlysasComFlightLists.setDirectFlightListReturn(directFlightListReturn);
 
+        return allFlysasComFlightLists;
     }
 
 }

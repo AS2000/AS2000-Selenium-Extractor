@@ -1,4 +1,4 @@
-package lt.vianet.selenium.flight_class;
+package lt.vianet.selenium.flights;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,8 @@ public class AllFlysasComFlightLists implements IAllFlysasComFlightLists {
 
     private List<IFlight> directFlightListForward;
     private List<IFlight> directFlightListReturn;
-    private List<IFlightFlysasComList> connectedFlightListForward;
-    private List<IFlightFlysasComList> connectedFlightListReturn;
+    private List<IFlightList> connectedFlightListForward;
+    private List<IFlightList> connectedFlightListReturn;
 
 
     public List<IFlight> getDirectFlightListForward() {
@@ -31,19 +31,19 @@ public class AllFlysasComFlightLists implements IAllFlysasComFlightLists {
     }
 
 
-    public List<IFlightFlysasComList> getConnectedFlightListForward() {
+    public List<IFlightList> getConnectedFlightListForward() {
         return connectedFlightListForward;
     }
 
-    public void setConnectedFlightListForward(List<IFlightFlysasComList> connectedFlightListForward) {
+    public void setConnectedFlightListForward(List<IFlightList> connectedFlightListForward) {
         this.connectedFlightListForward = connectedFlightListForward;
     }
 
-    public List<IFlightFlysasComList> getConnectedFlightListReturn() {
+    public List<IFlightList> getConnectedFlightListReturn() {
         return connectedFlightListReturn;
     }
 
-    public void setConnectedFlightListReturn(List<IFlightFlysasComList> connectedFlightListReturn) {
+    public void setConnectedFlightListReturn(List<IFlightList> connectedFlightListReturn) {
         this.connectedFlightListReturn = connectedFlightListReturn;
     }
 }

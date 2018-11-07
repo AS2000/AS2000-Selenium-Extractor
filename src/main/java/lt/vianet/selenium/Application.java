@@ -1,6 +1,6 @@
-package lt.vianet.extractor;
+package lt.vianet.selenium;
 
-import lt.vianet.extractor.Actions.Actions;
+import lt.vianet.selenium.actions.Actions;
 
 public class Application {
 

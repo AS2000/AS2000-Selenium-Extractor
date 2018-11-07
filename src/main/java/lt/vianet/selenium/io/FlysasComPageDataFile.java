@@ -1,4 +1,4 @@
-package lt.vianet.extractor.io;
+package lt.vianet.selenium.io;
 
 import java.io.*;
 
@@ -10,7 +10,7 @@ public class FlysasComPageDataFile {
         return loadList();
     }
 
-    // --------- Duomenu ATKURIMAS ---------
+    // --------- Load Data ---------
 
     private String loadList() {
 
@@ -28,7 +28,7 @@ public class FlysasComPageDataFile {
                 // jei failas neegzituoja, tai yra sukuriamas, kad nekiltu klaidos
 
 
-                System.out.println(" Failas nerastas!");
+                System.out.println(" Can't find the File!");
 //                file.createNewFile();
             }
         } catch (Exception e) {

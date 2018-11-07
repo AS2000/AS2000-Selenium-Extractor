@@ -1,10 +1,9 @@
-package lt.vianet.extractor.Actions;
+package lt.vianet.selenium.actions;
 
-import lt.vianet.extractor.extraction.FlysasComDataExtraction;
-import lt.vianet.extractor.flight_class.AllFlysasComFlightLists;
-import lt.vianet.extractor.io.FlysasComPageDataFile;
-import lt.vianet.extractor.io.SaveDataFlysasCom;
-import lt.vianet.extractor.page_adapters.WebPage;
+import lt.vianet.selenium.extraction.FlysasComDataExtraction;
+import lt.vianet.selenium.flights.AllFlysasComFlightLists;
+import lt.vianet.selenium.io.SaveDataFlysasCom;
+import lt.vianet.selenium.page_adapters.WebPage;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -32,23 +31,23 @@ public class FlysasCom {
         String dayForward = "8";
         String dayReturn = "14";
 
-        //All Flit List
+        //All Flight List
         AllFlysasComFlightLists allFlysasComFlightLists = new AllFlysasComFlightLists();
 
-// ARN (Stockholm) to LHR (London) departing 2018-10-08 and returning 2018-10-14.
+// ARN (Stockholm) to LHR (London) departing 08 d. and returning 14 d.
 // Only data for flights that are direct or have a connection at Oslo should be accepted.
 
         WebPage webPage = new WebPage("https://book.flysas.com/");
 
-        //TODO returns to the web page scan
+        // returns to the web page scan
         webPage.setHTML(getHTMLusingSelenium(departureAirport, arrivalAirport, pageURL, dayForward, dayReturn));
 
-        //TODO loads Data from File
+        // loads Data from File (for tests)
 //        webPage.setHTML(new FlysasComPageDataFile().getFlysasComPageData());
 
         webPage.setEncoding("utf-8");
 
-        fillFlySasData(webPage, departureAirport, arrivalAirport, connectionAirport, dayForward, dayReturn, allFlysasComFlightLists);
+        allFlysasComFlightLists = fillFlysasData(webPage, departureAirport, arrivalAirport, connectionAirport, dayForward, dayReturn, allFlysasComFlightLists);
 
         //Save Data to File
         new SaveDataFlysasCom(allFlysasComFlightLists).saveData();
@@ -67,7 +66,6 @@ public class FlysasCom {
 
         driver.manage().deleteAllCookies();
 
-        // TODO Move oneWayFlight (Boolean) variable to the top
         Boolean oneWayFlight;
 
         if (dayReturn.equals("0")) {
@@ -97,11 +95,14 @@ public class FlysasCom {
 
         acceptJsAlert(driver);
 
+        idTag = "ECONBGRules";
+        waitForPageToReload(driver, idTag);
+
+        String pageHTML = getHTMLfromPage(driver);
 
 //        driver.close();
 
-
-        return getHTMLfromPage(driver);
+        return pageHTML;
     }
 
 
@@ -110,7 +111,7 @@ public class FlysasCom {
         String buttonOneWayID = "uniform-ctl00_FullRegion_MainRegion_ContentRegion_ContentFullRegion_ContentLeftRegion_CEPGroup1_CEPActive_cepNDPRevBookingArea_ceptravelTypeSelector_oneway";
 
         WebElement queryFrom = driver.findElement(By.id(buttonOneWayID));
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         queryFrom.click();
     }
 
@@ -120,7 +121,7 @@ public class FlysasCom {
         String buttonRoundTripID = "uniform-ctl00_FullRegion_MainRegion_ContentRegion_ContentFullRegion_ContentLeftRegion_CEPGroup1_CEPActive_cepNDPRevBookingArea_ceptravelTypeSelector_roundtrip";
 
         WebElement queryFrom = driver.findElement(By.id(buttonRoundTripID));
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         queryFrom.click();
     }
 
@@ -131,12 +132,12 @@ public class FlysasCom {
 
         WebElement queryFrom = driver.findElement(By.name(fieldFrom));
         queryFrom.sendKeys(flightFrom);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
         driver.findElement(By.id(flightFrom)).click();
 
         WebElement queryTo = driver.findElement(By.name(fieldTo));
         queryTo.sendKeys(flightTo);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
         driver.findElement(By.id(flightTo)).click();
     }
 
@@ -185,17 +186,17 @@ public class FlysasCom {
 //RETURN:
         // Open Date Widget
         driver.findElement(By.xpath("//form//input[@class='flInDate hasDatepicker']")).click();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
 
         // Select Day
         driver.findElement(By.linkText(dayReturn)).click();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
 
         // Press SEARCH Button
         driver.findElement(By.xpath("//a[@id='ctl00_FullRegion_MainRegion_ContentRegion_ContentFullRegion_ContentLeftRegion_CEPGroup1_CEPActive_cepNDPRevBookingArea_Searchbtn_ButtonLink']")).sendKeys(Keys.RETURN);
     }
 
-
+//WAIT for page to reload
     private void waitForPageToReload(WebDriver driver, String idTag) {
 
         // http://qaru.site/questions/1143117/selenium-ajax-wait-if-ajax-returns-no-elements
@@ -204,12 +205,12 @@ public class FlysasCom {
                 .until(new ExpectedCondition<WebElement>() {
                     @Override
                     public WebElement apply(WebDriver d) {
-                        return d.findElement(By.id("suspiciousActivity"));
+                        return d.findElement(By.id(idTag));
                     }
                 });
     }
 
-
+// Accept Alert Message
     void acceptJsAlert(WebDriver driver) {
         (new WebDriverWait(driver, 10))
                 .until(ExpectedConditions.alertIsPresent());
@@ -219,23 +220,16 @@ public class FlysasCom {
 
     }
 
-    private String getHTMLfromPage(WebDriver driver) {
 
-        ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver driver) {
-                return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
-            }
-        };
+    private String getHTMLfromPage(WebDriver driver) {
 
         return driver.getPageSource();
     }
 
 
-    private void fillFlySasData(WebPage webPage, String departureAirport, String arrivalAirport, String connectionAirport, String dayForward, String dayReturn, AllFlysasComFlightLists allFlysasComFlightLists) {
+    private AllFlysasComFlightLists fillFlysasData(WebPage webPage, String departureAirport, String arrivalAirport, String connectionAirport, String dayForward, String dayReturn, AllFlysasComFlightLists allFlysasComFlightLists) {
 
-
-        new FlysasComDataExtraction(webPage, departureAirport, arrivalAirport, connectionAirport, dayForward, dayReturn, allFlysasComFlightLists).getFlightsData();
+        return (new FlysasComDataExtraction(webPage, departureAirport, arrivalAirport, connectionAirport, dayForward, dayReturn, allFlysasComFlightLists).getFlightsData());
     }
-
 }
 
